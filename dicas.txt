@@ -1,2 +1,0 @@
-- Para bkp do Linux, copie a pasta *.vhdx (C:\Users\franciscolg\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState) para o hd externo
-- Faça o shutdown do linux no Windows e substitua a pasta *.vhdx pela que vc salvou
