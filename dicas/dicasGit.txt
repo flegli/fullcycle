@@ -1,0 +1,157 @@
+0 - Comandos Git:
+    - Git init: inicia um repositorio GIT.
+    - Git status: verifica alterações na branch.
+    - Git rm -f: remove um arquivo.
+    - Git add: coloca arquivo com alterações na area de stage.
+            git add .: coloca todos os arquivos alterados na stage.
+            git add <arquivoExemplo>: coloca o arquivo, arquivoExemplo, na area de stage.
+    - Git checkout -- <arquivoExemplo>: descarte das alterações, antes do cmd 'git add'.
+    - Git commit -m 'mensagem': faz o commit ja adicionando a mensagem.
+    - Git config --global credential.helper 'store': Comando para criar credenciais de login no GitHub.
+            Criar o arquivo, '.git-credentials' e inserir a linha: https://user:pass@github.com
+    - Git remote: Para conectar com repositorios remotos.
+            git remote -v: para verificar repositorios remotos ja configurados.
+            git remote add origin <url>: adicionar repositorio remoto.
+    - Git push: envio de arquivos para repositorio remoto
+            git push --set-upstream origin master: equalizando a branch master local com o repositorio remoto.
+            * O erro fatal: refusing to merge unrelated histories geralmente acontece quando você tenta fazer o git pull de um repositório remoto, mas o seu repositório local possuí um histórico de commits, branches, etc, diferente do que está no repositório remoto.
+            Para permitir que o Git faça o merge de dois projetos com históricos diferentes, é só passar o parâmetro --allow-unrelated-histories quando for fazer o pull, assim:
+            git pull origin master --allow-unrelated-histories
+            (lembre-se de trocar os nomes do remote e branch para os que você utiliza)
+    - Git clone <url>: comando para clonar repositorios.
+    - Git pull: atualiza o repositorio local com a ultima versão do servidor.
+    - Git fetch: informa difrenças entre a branch local e o servidor.
+            * Comando para mostrar a branch que atual, inserir no ./bash_profile:
+            export CLICOLOR=1
+            export LSCOLORS=ExFxBxDxCxegedabagacad
+            export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$(parse_git_branch) $ "
+            parse_git_branch() {
+            git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+            }
+    - Git log: listagem com todos os commits que foram feitos na branch. Para sair tecle "q".
+    - Git tag: para marcar commit como releases. exemplo:
+        git push (sobe alterações)
+        git tag <versao> (marca a ultima alteração com a <versão>)
+        git --tags (sobe a tag para o servidor)
+    - Git branch: criar branches.
+        git branch <nome branch> (cria branch);
+        git branch (lista as branches)
+        git branch -D <nomeBranch> (apaga a branch "nomeBranch")
+    - Git checkout (branches):
+        git checkout -b <nomeBranch> (Muda da branch atual para a "nomeBranch")
+            Caso no ambiente local não exita a nomeBranch e esta exita no servidor será criada esta branchno ambiente local.
+    - Git merge: equalizando branches
+        entrar na branch a ser atualizada (master);
+        git merge <nomeBranch> (atualiza a branch atual com a nomeBranch)
+    - Git log: historico de commits
+    - Git Rebase: assistir novamente
+    - Git cherry-pic: selecionar e retornar a detrminados commits
+        git cherry-pic <rash>
+1 - Git Flow
+    - https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+    - git init (inicialização do Git)
+    - git branch (informa a branch atual e as existentes)
+    - git checkout -b develop (cria a branch develop)
+    - git push origin develop (cria a branch develop no repositorio remoto)
+    - git flow init (inicia o dir git com as branches padrões)
+    - git flow feature start welcome (cria uma feature branch de nome "welcome")
+    - git add . (inclui arqs não mapeados para serem "comitados")
+    - git commit -m 'descrição' (Commita os arqs que estão na stage com a descrição entre '')
+    - git log (lista as alterações)
+    - git flow finish welcome (finaliza a branch feature/welcome faz o merge com a develop e apaga a feature/welcome)
+    - Para mostrar o branch atual do git no mesmo local onde fica o diretório no terminal, faça o seguinte:
+        1) Abrir o arquivo ~/.bashrc
+        2) Colocar o seguinte no final do arquivo:
+
+            # show git branch
+            parse_git_branch() {
+                git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+            }
+            export PS1="\[\033[00m\]\u@\h\[\033[01;33m\] \w \[\033[31m\]\$(parse_git_branch)\[\033[00m\]$\[\033[00m\] "
+        
+        3) Editar o arquivo ~/.gitconfig:
+            [color]
+            ui = auto
+            
+            [alias]
+            lg = log --pretty=format:'%Cgreen%h %Cblue%ad %Cred%cn %Creset%s' --date=short
+            ll = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat
+            ffc = diff-tree --no-commit-id --name-only -r
+            
+            [core]
+            editor=vim
+    - git flow release start 0.1.0 (cria uma relesase branch baseada na develop)
+    - git flow release finish 0.1.0 (Summary of actions:
+        - Release branch 'release/0.1.0' has been merged into 'master'
+        - The release was tagged '0.1.0'
+        - Release tag '0.1.0' has been back-merged into 'develop'
+        - Release branch 'release/0.1.0' has been locally deleted
+        - You are now on branch 'develop')
+    - Git tag (exibe a tag criada)
+    - git flow hotfix start contact (Summary of actions:
+        - A new branch 'hotfix/contact' was created, based on 'master'
+        - You are now on branch 'hotfix/contact')
+    - git flow hotfix finish contact (Summary of actions:
+        - Hotfix branch 'hotfix/contact' has been merged into 'master'
+        - The hotfix was tagged 'contact'
+        - Hotfix tag 'contact' has been back-merged into 'develop'
+        - Hotfix branch 'hotfix/contact' has been locally deleted
+        - You are now on branch 'develop')
+
+2 - Configuração de branches
+    - gpg --list-secret-keys --keyid-format LONG (verificar chaves criadas)
+    - gpg --full-generate-key (criar chave)
+    - gpg --armor --export 75A7B9424EDA14D0 (verificar a chave RSA)
+    - Ir no github, settings, SSH and GPG keys, New GPG key ... e add a chave copiada
+    - git config --global user.signingKey 75A7B9424EDA14D0 (para o git usar a chave "75A7B9424EDA14D0")
+    - incluir: export GPG_TTY=$(tty) no .bashrc
+    - git config --global commit.gpgSign true (assinar todos os commits com a chave gpg)
+    - git config --global tag.gpgSign true (assinar todos as tags com a chave gpg)
+    - senha do git: flegli01
+    - git log --show-signature -1 (exibe as infos da assinatura do commit)
+    - git branch -M master (vai para branch master)
+    - git remote add origin https://github.com/flegli/fullcycle.git (mapear diretorio remoto)
+    - git push -u origin master
+    - vim ~/.gnupg/gpg.conf : inserir gpg-agent
+    - gpgconf --launch gpg-agent (para não pedir senha)
+    - gpg --edit-key 75A7B9424EDA14D0 (editar a chave)
+        - adduid (add novo user)
+        - uid 2
+        - trust
+        - 5
+
+3 - Pull Requests / Templates para para
+    - depois da pull request e do merge no github e deletar a feature/contact 
+        - flegli@Flegli-Desktop ~/fullcycle/Git (feature/contact)$ git checkout develop 
+            Switched to branch 'develop'
+        - flegli@Flegli-Desktop ~/fullcycle/Git (develop)$ git pull origin develop 
+            remote: Enumerating objects: 1, done.
+            remote: Counting objects: 100% (1/1), done.
+            Unpacking objects: 100% (1/1), 642 bytes | 642.00 KiB/s, done.
+            remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+            From https://github.com/flegli/fullcycle
+                * branch            develop    -> FETCH_HEAD
+                5c6345f..0adc51a  develop    -> origin/develop
+            Updating 5c6345f..0adc51a
+            Fast-forward
+                contact.txt => contact.html | 0
+                1 file changed, 0 insertions(+), 0 deletions(-)
+                rename contact.txt => contact.html (100%)
+        - flegli@Flegli-Desktop ~/fullcycle/Git (develop)$ git branch -d feature/contact 
+            Deleted branch feature/contact (was aa6a276).
+    - https://github.com/embeddedartistry/templates/blob/master/.github/PULL_REQUEST_TEMPLATE.md (template pull request)
+
+4 - Code review
+    - ver video
+
+5 - Plugin do VSCode
+    - ver video
+
+6 - CodeOwners
+    - ver video
+
+7 - SemVer
+    - ver video
+
+8 - Convetional Commits
+    - ver video

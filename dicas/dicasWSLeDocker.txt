@@ -1,0 +1,33 @@
+WSL
+- Para bkp do Linux, copie a pasta *.vhdx (C:\Users\franciscolg\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState) para o hd externo
+- Faça o shutdown do linux no Windows e substitua a pasta *.vhdx pela que vc salvou
+- Erro no docker sobre o deamon: roadr o comando (docker run -d -p 80:80 docker/getting-started) como root
+DOCKER
+- docker exec -it app bash (entrar no container "app" mode interativo no bash)
+- docker ps (lista containers)
+- docker rm $(docker ps -a -q) -f (remove todos os containers ativos e não ativos)
+- docker images (lista as imagens)
+- docker rmi <Imagem>:<tag> (remove imagens)
+- docker build -t flegli/nginx-com-vim:latest . (cria imagem baseado no dockerfile no diretorio corrente)
+- docker run -it flegli/nginx-com-vim bash (cria o container basseado na imagen gerada)
+- docker login (direto do terminal para logar no docker hub)
+- docker push flegli/laravel (upload da imagem laravel para o dockerhub)
+- docker network create --driver bridge minharede (cria a rede minharede)
+- docker run -dit --name ubuntu1 --network minharede bash (cria o container "ubuntu1" na rede "minharede")
+- docker network connect minharede ubuntu3 (add o container "ubuntu3" na rede "minharede")
+- docker network inspect minharede (exibe as configs da rede "minharede")
+- ip addr show (exibe info de conexão)
+- docker run --rm -it -v $(pwd)/:/usr/src/app -p 3000:3000 node:16.17 bash (gerar container que se remove ao sair dele, modo de interação
+  correlacionando, compartilhamento de volume o diretorio atual com o diretorio "/usr/src/app" do container, correlacionando a porta 3000 da 
+  maquina a porta 3000 do container de uma imagem node e executando o terminal)
+- docker build -t flegli/hello-express -f Dockerfile.prod (executa o build apontando para o dockerfile.prod, verificar antes se está no dir correto)
+- docker build -t flegli/laravel:prod laravel -f laravel/Dockerfile.prod (passando o PATH, no caso "laravel" e o dir onde está o Dockerfile.prod)
+- Scene 1 - container nginx atuando como proxy reverso e chamando container laravel:
+    - Build Nginx:   docker build -t flegli/nginx:prod . -f Dockerfile.prod
+    - Run Nginx:     docker run -d --network laranet --name nginx -p 8080:80  flegli/nginx:prod
+    - Build Laravel: docker build -t flegli/laravel:prod laravel -f laravel/Dockerfile.prod
+    - Run Laravel:   docker run -d --network laranet --name laravel flegli/laravel:prod
+- docker-compose up -d (executa o docker compose, liberando o terminal)
+- docker-compose ps (verifica os containers ativos do docker compose)
+- docker-compose down (desce os serviços)
+- docker-compose up -d --build (seobe os serviços fazendo o re-build das imagens)

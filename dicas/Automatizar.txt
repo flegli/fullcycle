@@ -1,0 +1,14 @@
+Automatizar:
+    - Necessidade de orquestração
+    - Necessidade de gerenciamento (sistemas, aplicações, processos)
+    - Automatizar o que não é analítico
+    - Ganhar escala
+    - Segurança, tarefas repetitivas são sujeitas a falhas
+    - Assessment detalhado com foco na necessidade (o que vc tem e o que vc usa e qual sua necessidade)
+        - Provar o valor antes do projeto
+        - Eliminar vicios, otimizar processos, eliminar loops
+        - trazer ferramentas compativeis com sua necessidade e não sua demanda se adptar as ferramentas
+    - RPA: Robotic Process Automation
+    - *Assessment, celeridade e errar rápido, comunicação, visão de valor para todos 
+
+    Rogério Santana
