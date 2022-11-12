@@ -109,7 +109,7 @@
     - git config --global tag.gpgSign true (assinar todos as tags com a chave gpg)
     - senha do git: flegli01
     - git log --show-signature -1 (exibe as infos da assinatura do commit)
-    - git branch -M master (vai para branch master)
+    - git branch -M master (renomeia para branch master)
     - git remote add origin https://github.com/flegli/fullcycle.git (mapear diretorio remoto)
     - git push -u origin master
     - vim ~/.gnupg/gpg.conf : inserir gpg-agent
